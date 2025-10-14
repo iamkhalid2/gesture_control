@@ -30,8 +30,24 @@ A gesture and voice-controlled virtual mouse using Computer Vision and Speech Re
 
 ## Installation
 
+It is highly recommended to use a Python virtual environment to avoid conflicts with your global packages.
+
 1.  **Clone or Download** this repository.
-2.  **Install Required Packages**:
+
+2.  **Create and Activate a Virtual Environment**:
+
+    *   On Windows:
+        ```bash
+        python -m venv venv
+        .\venv\Scripts\activate
+        ```
+    *   On macOS/Linux:
+        ```bash
+        python3 -m venv venv
+        source venv/bin/activate
+        ```
+
+3.  **Install Required Packages**:
     ```bash
     pip install -r requirements.txt
     ```
@@ -42,7 +58,12 @@ A gesture and voice-controlled virtual mouse using Computer Vision and Speech Re
 
 ## Usage
 
-1.  **Run the Application**:
+1.  **Activate the virtual environment** if it's not already active:
+    ```bash
+    .\venv\Scripts\activate
+    ```
+
+2.  **Run the Application**:
     ```bash
     python gesture_mouse.py
     ```
