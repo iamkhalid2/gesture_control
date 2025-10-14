@@ -12,9 +12,11 @@ pyautogui>=0.9.50
 # Mathematical Operations
 numpy>=1.19.0
 
-# Optional: For better performance (uncomment if needed)
-# opencv-contrib-python>=4.5.0
+# Audio Input and Output
+pynput>=1.7.0
 
-# Development dependencies (optional)
-# matplotlib>=3.3.0  # For debugging and visualization
-# pillow>=8.0.0      # Additional image processing
+# Speech Recognition
+SpeechRecognition>=3.8.1
+
+# Audio Processing
+pyaudio>=0.2.11
