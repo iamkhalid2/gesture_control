@@ -1,15 +1,4 @@
-﻿"""
-Gesture Controlled Virtual Mouse
-Implementation following the methodology of the uploaded report (MediaPipe + OpenCV + SpeechRecognition + pyautogui/pynput).
-Finger ids (MediaPipe Hands):
- - 8 : index finger tip
- - 6 : index finger PIP (used to test if index is up)
- - 12: middle finger tip
- - 10: middle finger PIP
-Refer to report for method description. (See file attached in conversation.)
-"""
-
-import cv2
+﻿import cv2
 import mediapipe as mp
 import pyautogui
 import math
