@@ -130,6 +130,10 @@ The program is a single script (`gesture_mouse.py`) with the following component
 -   Requires good lighting and a clear background for best performance.
 -   Voice recognition requires an internet connection for the default Google Web Speech API.
 
+## References
+
+-  https://ijarsct.co.in/Paper10833.pdf
+
 ---
 
 **Happy Gesture Computing! 🖱️✋**
