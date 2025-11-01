@@ -4,131 +4,115 @@ A gesture and voice-controlled virtual mouse using Computer Vision and Speech Re
 
 ## Features
 
-- **🖱️ Complete Mouse Control**:
-  - **Cursor Movement**: Raise index and middle fingers.
-  - **Left Click**: Lower index finger while middle finger is up.
-  - **Right Click**: Lower middle finger while index finger is up.
-  - **Double Click**: Perform two quick left clicks.
-- **🎤 Voice Commands**:
-  - "left click", "right click", "double click"
-  - "scroll up", "scroll down"
-- **📹 Real-time Processing**:
-  - Live webcam feed processing.
-  - Smooth cursor movement with configurable smoothing.
-  - Visual feedback with hand landmarks and current mode display.
-- **🎯 Easy to Use**:
-  - No additional hardware required (just a webcam and microphone).
-  - Simple gesture and voice vocabulary.
+🖱️ **Mouse Control**
+- Move cursor by raising both index and middle fingers
+- Left click by lowering index finger (middle stays up)
+- Right click by lowering middle finger (index stays up)
+- Double click with two quick left clicks
+
+🎤 **Voice Commands**
+- "click" or "left click"
+- "right click"
+- "double click"
+- "scroll up" / "scroll down"
+
+📹 **Real-time Processing**
+- Live webcam feed with hand tracking
+- Smooth cursor movement
+- Visual feedback with hand landmarks
 
 ## Technology Stack
 
-- **OpenCV**: For camera feed and image processing.
-- **MediaPipe**: For hand tracking and landmark detection.
-- **PyAutoGUI**: For programmatic mouse control.
-- **SpeechRecognition**: For voice command processing.
-- **PyAudio**: Required by SpeechRecognition to access the microphone.
+- **OpenCV**: Camera feed and image processing
+- **MediaPipe**: Hand tracking and landmark detection
+- **PyAutoGUI**: Mouse control
+- **SpeechRecognition**: Voice command processing
+- **PyAudio**: Microphone access
 
 ## Installation
 
-It is highly recommended to use a Python virtual environment to avoid conflicts with your global packages.
+**Using Virtual Environment (Recommended):**
 
-1.  **Clone or Download** this repository.
+```bash
+# Create virtual environment
+python -m venv venv
 
-2.  **Create and Activate a Virtual Environment**:
+# Activate it
+.\venv\Scripts\activate  # Windows
+source venv/bin/activate  # macOS/Linux
 
-    *   On Windows:
-        ```bash
-        python -m venv venv
-        .\venv\Scripts\activate
-        ```
-    *   On macOS/Linux:
-        ```bash
-        python3 -m venv venv
-        source venv/bin/activate
-        ```
-
-3.  **Install Required Packages**:
-    ```bash
-    pip install -r requirements.txt
-    ```
-    Or install manually:
-    ```bash
-    pip install opencv-python mediapipe pyautogui SpeechRecognition pyaudio
-    ```
+# Install dependencies
+pip install -r requirements.txt
+```
 
 ## Usage
 
-1.  **Activate the virtual environment** if it's not already active:
-    ```bash
-    .\venv\Scripts\activate
-    ```
+1. **Activate virtual environment** (if using):
+   ```bash
+   .\venv\Scripts\activate
+   ```
 
-2.  **Run the Application**:
-    ```bash
-    python gesture_mouse.py
-    ```
-2.  **Position Your Hand** in front of the camera. The cursor will only move when your index finger is inside the designated on-screen rectangle.
-3.  **Use Gestures and Voice Commands**:
+2. **Run the application**:
+   ```bash
+   python gesture_mouse.py
+   ```
 
-    | Action | Gesture / Voice Command |
-    | :--- | :--- |
-    | **Move Cursor** | Raise both index and middle fingers. |
-    | **Left Click** | Lower index finger while middle finger is up. |
-    | **Right Click** | Lower middle finger while index finger is up. |
-    | **Double Click** | Perform two quick left clicks. |
-    | **Voice Commands** | Say "left click", "right click", "double click", "scroll up", "scroll down". |
-    | **Exit** | Press the 'q' key on the keyboard. |
+3. **Gestures**:
+   - **Move**: Raise both index and middle fingers, move your wrist
+   - **Left Click**: Lower index finger while middle is up
+   - **Right Click**: Lower middle finger while index is up
+
+4. **Exit**: Press 'q' key
 
 ## How It Works
 
-1.  **Hand Detection**: The system uses MediaPipe to detect and track 21 key points on a single hand in real-time.
-2.  **Gesture Recognition**: The application analyzes the state of the index and middle fingers (up or down) to recognize gestures.
-    -   **Finger State**: It checks if a finger is "up" by comparing the vertical position of its tip to its middle joint (PIP).
-    -   **Movement**: When both index and middle fingers are up, the position of the index fingertip is mapped to the screen to move the cursor. Movement is smoothed to reduce jitter.
-    -   **Clicks**: A click is triggered when one finger goes down while the other remains up.
-3.  **Voice Recognition**: A separate thread listens for voice commands using the `SpeechRecognition` library. It can perform clicks and scrolling, complementing the gesture controls.
-4.  **Mouse Control**: Recognized gestures and voice commands are translated into mouse actions using `PyAutoGUI`.
+1. **Hand Detection**: MediaPipe detects 21 hand landmarks in real-time
+2. **Cursor Tracking**: Wrist position controls cursor (not fingertip), preventing unwanted movement during clicks
+3. **Gesture Recognition**: Finger up/down states trigger clicks
+4. **Voice Recognition**: Auto-detects working microphone and listens for commands
+5. **Smoothing**: Cursor movement is smoothed to reduce jitter
 
 ## Configuration
 
-You can modify these parameters at the top of `gesture_mouse.py`:
+Edit these values in `gesture_mouse.py`:
 
 ```python
-# Camera and smoothing settings
-CAM_WIDTH, CAM_HEIGHT = 640, 480
-SMOOTHING = 7
-MOVE_REGION = (0.2, 0.8, 0.2, 0.8) # Active area for cursor movement
-DOUBLE_CLICK_INTERVAL = 0.4
+CAM_WIDTH, CAM_HEIGHT = 640, 480    # Camera resolution
+SMOOTHING = 7                        # Cursor smoothing (higher = smoother)
+MOVE_REGION = (0.2, 0.8, 0.2, 0.8)  # Active tracking area
+DOUBLE_CLICK_INTERVAL = 0.4          # Max time between clicks for double-click
 ```
 
 ## Troubleshooting
 
--   **Microphone/Speech Issues**: Ensure you have `PyAudio` installed. If you get a "Microphone not available" error, check that your mic is connected and not in use by another application.
--   **Camera Issues**: Ensure your camera is connected and working. The script uses the default camera (index 0).
--   **Gesture Recognition**:
-    -   Use in a well-lit environment.
-    -   Keep your hand clearly visible in the camera frame.
-    -   Make distinct finger movements.
+### Voice Commands Not Working?
+
+The application **automatically detects** the working microphone. If it fails:
+
+1. Check Windows Sound Settings (Right-click speaker icon → Sounds → Recording)
+2. Ensure microphone is enabled and not muted
+3. Set as default recording device
+4. Increase microphone volume
+
+### Camera Issues
+
+- Ensure camera is connected and not used by other applications
+- Script uses default camera (index 0)
+
+### Gesture Recognition Issues
+
+- Use good lighting
+- Keep hand clearly visible in the rectangle
+- Make distinct finger movements
 
 ## Code Structure
 
-The program is a single script (`gesture_mouse.py`) with the following components:
--   **Configuration**: Global variables for tuning performance.
--   **Helper Functions**: `finger_is_up`, `calc_angle_between_fingers`.
--   **State Variables**: To track previous finger states for gesture detection.
--   **`speech_listener()` function**: Runs in a background thread to handle voice commands.
--   **Main Loop**:
-    -   Initializes MediaPipe, PyAutoGUI, and OpenCV.
-    -   Captures video frames.
-    -   Processes hand landmarks.
-    -   Detects gestures and moves the mouse.
-    -   Displays visual feedback on the screen.
-
-## Limitations
-
--   Single-hand detection by default.
--   Requires good lighting and a clear background for best performance.
--   Voice recognition requires an internet connection for the default Google Web Speech API.
+The code is ~150 lines, organized as:
+- **Config**: Global settings
+- **Helper Functions**: Finger detection, angle calculation
+- **Auto Microphone Detection**: Finds working microphone automatically
+- **Voice Recognition Thread**: Runs in background
+- **Main Loop**: Hand detection and gesture recognition
 
 ---
 
