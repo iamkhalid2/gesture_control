@@ -114,6 +114,10 @@ The code is ~150 lines, organized as:
 - **Voice Recognition Thread**: Runs in background
 - **Main Loop**: Hand detection and gesture recognition
 
+## References
+
+-  https://ijarsct.co.in/Paper10833.pdf
+
 ---
 
 **Happy Gesture Computing! 🖱️✋**
